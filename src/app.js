@@ -23,6 +23,6 @@ mongoose.connect('mongodb://localhost:27017/food-app', {
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+app.listen(process.env.PORT || port, () => {
+  console.log(`Example app listening at http://localhost:${process.env.PORT || port}`)
 })
