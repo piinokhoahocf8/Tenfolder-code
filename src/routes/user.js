@@ -7,6 +7,6 @@ router.get('/me', isAuth, getMe);
 
 router.put('/change-information', isAuth, changeInformation);
 
-router.post('/change-password', isAuth, changePassword)
+router.put('/change-password', isAuth, changePassword)
 
 module.exports = router;

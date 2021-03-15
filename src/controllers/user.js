@@ -17,13 +17,13 @@ module.exports.changeInformation = async (req, res,next) => {
     try {
         var name = req.body.name;
         
-        var user = await User.findOneAndUpdate({ _id: req.user._id}, { name: name })
+        var user = await User.findOneAndUpdate({ _id: req.user._id}, { name: name }, { new: true })
 
         res.json({
             user: user
         })
     } catch (e) {
-        console.log('getUser', e)
+        console.log('change informarion', e)
     }
 }
 
