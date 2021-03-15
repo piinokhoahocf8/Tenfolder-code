@@ -28,24 +28,28 @@ module.exports.changeInformation = async (req, res,next) => {
 
 module.exports.changePassword = async (req, res,next) => {
     try {
-        var oldpassword = req.body.oldpassword; 
+        var oldPassword = req.body.oldPassword;  // mk cu 123123 === 4297f44b13955235245b2497399d7a93
+        var password =  req.body.password; // mk moi 123abc
 
-        var user = await User.findOne({ password: oldpassword });
+        var hashOldPassword = md5(oldPassword)
+        var user = await User.findOne({ password: hashOldPassword });
 
         if (!user) {
             return res.json({
-                error: 'mat khau hien tai khong dung '
+                error: 'Mat khau hien tai khong dung'
             })
         }
-        const newPassword = randomstring.generate(6);
-        const hashPassword =  md5(newPassword);
 
-        await User.findOneAndUpdate({ email: email }, { password: hashPassword })
+        const hashPassword =  md5(password);
 
-        var newpassword = req.body.newPassword
+        await User.findOneAndUpdate({ _id: user._id }, { password: hashPassword })
+
+        res.json({
+            message: 'Doi mat khau thanh cong'
+        })
       
    } catch (e) {
-       console.log('getUser', e)
+       console.log('forgot password', e)
 }
 }
 
