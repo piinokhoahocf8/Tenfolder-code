@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true
 });
 
-app.get('/', function() {
+app.get('/', function(req, res, next) {
   res.json({
     message: 'Welcome to SeekFood API.'
   })
