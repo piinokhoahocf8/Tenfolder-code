@@ -12,14 +12,18 @@ const port = 3000
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-mongoose.connect('mongodb://localhost:27017/food-app', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
   useCreateIndex: true
 });
 
-
+app.get('/', function() {
+  res.json({
+    message: 'Welcome to SeekFood API.'
+  })
+})
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
 
