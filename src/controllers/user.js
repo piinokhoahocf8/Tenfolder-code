@@ -1,4 +1,5 @@
-const User = require("../models/user")
+var User = require("../models/user")
+var md5 = require('md5');
 
 module.exports.getMe = async (req, res,next) => {
     try {
@@ -40,7 +41,7 @@ module.exports.changePassword = async (req, res,next) => {
             })
         }
 
-        const hashPassword =  md5(password);
+        var hashPassword = md5(password);
 
         await User.findOneAndUpdate({ _id: user._id }, { password: hashPassword })
 
