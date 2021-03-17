@@ -16,8 +16,12 @@ module.exports.getMe = async (req, res,next) => {
 module.exports.changeInformation = async (req, res,next) => {
     try {
         var name = req.body.name;
-        
-        var user = await User.findOneAndUpdate({ _id: req.user._id}, { name: name }, { new: true })
+        var dayOfBirth = req.body.dayOfBirth;
+        var address = req.body.address;
+        var gender = req.body.gender;
+
+
+        var user = await User.findOneAndUpdate({ _id: req.user._id}, { name: name, dayOfBirth: dayOfBirth, address: address, gender: gender }, { new: true })
 
         res.json({
             user: user
@@ -29,8 +33,8 @@ module.exports.changeInformation = async (req, res,next) => {
 
 module.exports.changePassword = async (req, res,next) => {
     try {
-        var oldPassword = req.body.oldPassword;  // mk cu 123123 === 4297f44b13955235245b2497399d7a93
-        var password =  req.body.password; // mk moi 123abc
+        var oldPassword = req.body.oldPassword;  
+        var password =  req.body.password; 
 
         var hashOldPassword = md5(oldPassword)
         var user = await User.findOne({ password: hashOldPassword });
@@ -54,11 +58,3 @@ module.exports.changePassword = async (req, res,next) => {
 }
 }
 
-
-//Định ra function trong controller
-//changePassword
-//oldPassword
-//newPassword
-//oldPassword có khớp với mk hiện tại hay không
-//không khớp => báo lỗi mật khẩu hiện tại ko đúng
-//khớp => đổi lại mk = newPassword

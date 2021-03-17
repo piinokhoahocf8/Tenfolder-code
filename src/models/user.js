@@ -16,7 +16,20 @@ const schema = new mongoose.Schema({
     resetLink:{
         data: String,
         default: ''
-    }
+    },
+    dayOfBirth:{
+        data: Date,
+        require: true
+    },
+    address:{
+        data: String,
+        require: true
+    },
+    gender:{
+        data: String,
+        require: true
+    },
+
 }, {
     timestamps: true
 });
