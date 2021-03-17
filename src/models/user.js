@@ -18,15 +18,15 @@ const schema = new mongoose.Schema({
         default: ''
     },
     dayOfBirth:{
-        data: Date,
+        type: Date,
         require: true
     },
     address:{
-        data: String,
+        type: String,
         require: true
     },
     gender:{
-        data: String,
+        type: String,
         require: true
     },
 
