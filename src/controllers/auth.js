@@ -10,7 +10,9 @@ module.exports.register = async function (req, res, next) {
         var email = req.body.email; // email nhap len
         var password = req.body.password;
         var name = req.body.name;
-        var age = req.body.age;
+        var dayOfBirth = req.body.dayOfBirth;
+        var address = req.body.address;
+        var gender = req.body.gender;
 
 
         var existedUser = await User.findOne({ email: email });
@@ -31,7 +33,9 @@ module.exports.register = async function (req, res, next) {
             email: email,
             password: hashPassword,
             name: name,
-            age: age
+            dayOfBirth: dayOfBirth,
+            address: address,
+            gender: gender
         })
 
         res.json({
