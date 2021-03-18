@@ -5,11 +5,14 @@ module.exports.getMe = async (req, res,next) => {
     try {
         var user = await User.findOne({ _id: req.user._id})
 
-        res.json({
-            user: user
+        Response.success({
+            res,
+            message:{
+                user: user
+            }         
         })
     } catch (e) {
-        console.log('getUser', e)
+        next(e)
     }
 }
 
@@ -23,11 +26,14 @@ module.exports.changeInformation = async (req, res,next) => {
 
         var user = await User.findOneAndUpdate({ _id: req.user._id}, { name: name, dayOfBirth: dayOfBirth, address: address, gender: gender }, { new: true })
 
-        res.json({
-            user: user
+        Response.success({
+            res,
+            message:{
+                user: user
+            }         
         })
     } catch (e) {
-        console.log('change informarion', e)
+       next(e)
     }
 }
 
@@ -40,8 +46,9 @@ module.exports.changePassword = async (req, res,next) => {
         var user = await User.findOne({ password: hashOldPassword });
 
         if (!user) {
-            return res.json({
-                error: 'Mat khau hien tai khong dung'
+            return Response.error({
+                res,
+                message: 'Mat khau hien tai khong dung'
             })
         }
 
@@ -49,12 +56,13 @@ module.exports.changePassword = async (req, res,next) => {
 
         await User.findOneAndUpdate({ _id: user._id }, { password: hashPassword })
 
-        res.json({
+        Response.success({
+            res,
             message: 'Doi mat khau thanh cong'
         })
       
    } catch (e) {
-       console.log('forgot password', e)
-}
+      next(e)
+    }
 }
 

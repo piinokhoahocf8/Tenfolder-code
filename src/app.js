@@ -1,6 +1,8 @@
 var express = require('express')
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser')
+var createError = require('http-errors')
+
 require('dotenv').config()
 
 const authRoute = require('./routes/auth')
@@ -26,6 +28,13 @@ app.get('/', function(req, res, next) {
 })
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
+
+//error handler
+app.use(function (err, req, res, next) {
+  res.status(500).json({
+    error: err.stack
+  })
+})
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening at http://localhost:${process.env.PORT || port}`)

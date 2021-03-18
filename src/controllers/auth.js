@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
 var User = require('../models/user')
+var Response = require('../helpers/response')
 var md5 = require('md5');
 var randomstring = require("randomstring");
 var sgMail = require('@sendgrid/mail');
@@ -10,20 +11,15 @@ module.exports.register = async function (req, res, next) {
         var email = req.body.email; // email nhap len
         var password = req.body.password;
         var name = req.body.name;
-        var dayOfBirth = req.body.dayOfBirth;
-        var address = req.body.address;
-        var gender = req.body.gender;
-
 
         var existedUser = await User.findOne({ email: email });
 
         // neu user da ton tai => tra ve loi
         if (existedUser) {
-            return res.json(
-                {
-                    error: 'Email da ton tai trong he thong'
-                }
-            )
+            return Response.error({
+                res,
+                message: 'Email da ton tai trong he thong'
+            })
         }
 
         var hashPassword = md5(password);
@@ -32,17 +28,18 @@ module.exports.register = async function (req, res, next) {
         var user  =  await User.create({
             email: email,
             password: hashPassword,
-            name: name,
-            dayOfBirth: dayOfBirth,
-            address: address,
-            gender: gender
+            name: name
         })
 
-        res.json({
-        user: user
+        Response.success({
+            res,
+            code: 201,
+            data: {
+                user: user
+            }
         })
     } catch (e) {
-        console.log('register', e)
+        next(e)
     }
     
 }
@@ -55,33 +52,35 @@ module.exports.login = async function (req, res, next) {
         var user = await User.findOne({ email: email });
 
         if (!user) {
-            return res.json({
-                error: 'Email khong ton tai trong he thong'
+            return Response.error({
+                res: res,
+                message: 'Email khong ton tai'
             })
         }
-
         var hashPassword = md5(password);
 
         if (user.password !== hashPassword){
-            return res.json({
-                error: 'mat khau khong dung'
+            return Response.error({
+                res,
+                message: 'Mat khau khong dung'
             })
         }
            
         var token = jwt.sign({ _id: user._id, name: user.name }, process.env.JWT_PRIVATE_KEY);
 
-        res.json({
-            token: token,
-            user: {
-
-                email: user.email,
-                name: user.name,
-                _id: user._id
-                
+        Response.success({
+            res,
+            data: {
+                token: token,
+                user: {
+                    email: user.email,
+                    name: user.name,
+                    _id: user._id
+                }
             }
         })
     } catch(e) {
-        console.log('login', e)
+        next(e)
     }
 }
 
@@ -92,8 +91,9 @@ module.exports.forgotPassword = async (req, res, next) => {
         var user = await User.findOne({ email: email });
 
         if (!user) {
-            return res.json({
-                error: 'Email khong ton tai trong he thong'
+            return Response.error({
+                res,
+                message: 'Email khong ton tai trong he thong'
             })
         }
 
@@ -110,14 +110,13 @@ module.exports.forgotPassword = async (req, res, next) => {
         }
 
         await sgMail.send(msg)
-        
 
-        res.json({
+        Response.success({
+            res,
             message: 'Chúng tôi đã gửi mật khẩu mới về email của bạn',
-        
         })
     } catch (e) {
-        console.error('login', e)
+        next(e)
     }
 }
 
