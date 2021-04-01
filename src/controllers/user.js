@@ -1,6 +1,7 @@
 var User = require("../models/user")
 var md5 = require('md5');
 
+
 module.exports.getMe = async (req, res,next) => {
     try {
         var user = await User.findOne({ _id: req.user._id})
@@ -48,7 +49,7 @@ module.exports.changePassword = async (req, res,next) => {
         if (!user) {
             return Response.error({
                 res,
-                message: 'Mat khau hien tai khong dung'
+                message: 'Mật khẩu hiện tại không đúng'
             })
         }
 
@@ -58,11 +59,13 @@ module.exports.changePassword = async (req, res,next) => {
 
         Response.success({
             res,
-            message: 'Doi mat khau thanh cong'
+            message: 'Đổi mật khẩu thành công'
         })
       
    } catch (e) {
       next(e)
     }
 }
+
+
 

@@ -12,7 +12,7 @@ var isAuth = async (req, res,  next) => {
 
         if (!user) {
             return res.json({
-                error: 'User khong ton tai'
+                error: 'User không tồn tại'
             })
         }
 

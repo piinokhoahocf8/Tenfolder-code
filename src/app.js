@@ -1,18 +1,19 @@
 var express = require('express')
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser')
-var createError = require('http-errors')
-
 require('dotenv').config()
 
-const authRoute = require('./routes/auth')
-const userRoute = require('./routes/user')
+const authRoute = require('./routes/auth');
+const userRoute = require('./routes/user');
+const uploadRoute = require('./routes/upload');
+const postRoute = require('./routes/post');
+
 
 const app = express()
 const port = 3000
 
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(express.json({ limit: '50mb' }))
+app.use(express.urlencoded({ limit: '50mb', extended: false }))
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -21,6 +22,11 @@ mongoose.connect(process.env.MONGODB_URI, {
   useCreateIndex: true
 });
 
+
+
+
+
+
 app.get('/', function(req, res, next) {
   res.json({
     message: 'Welcome to SeekFood API.'
@@ -28,6 +34,8 @@ app.get('/', function(req, res, next) {
 })
 app.use('/auth', authRoute)
 app.use('/user', userRoute)
+app.use('/upload', uploadRoute)
+app.use('/post', postRoute)
 
 //error handler
 app.use(function (err, req, res, next) {

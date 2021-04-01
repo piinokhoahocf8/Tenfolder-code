@@ -18,7 +18,7 @@ module.exports.register = async function (req, res, next) {
         if (existedUser) {
             return Response.error({
                 res,
-                message: 'Email da ton tai trong he thong'
+                message: 'Email đã tồn tại trong hệ thống'
             })
         }
 
@@ -54,7 +54,7 @@ module.exports.login = async function (req, res, next) {
         if (!user) {
             return Response.error({
                 res: res,
-                message: 'Email khong ton tai'
+                message: 'Email không tồn tại'
             })
         }
         var hashPassword = md5(password);
@@ -62,7 +62,7 @@ module.exports.login = async function (req, res, next) {
         if (user.password !== hashPassword){
             return Response.error({
                 res,
-                message: 'Mat khau khong dung'
+                message: 'Mật khẩu không đúng'
             })
         }
            
@@ -93,7 +93,7 @@ module.exports.forgotPassword = async (req, res, next) => {
         if (!user) {
             return Response.error({
                 res,
-                message: 'Email khong ton tai trong he thong'
+                message: 'Email không tồn tại trong hệ thống'
             })
         }
 
