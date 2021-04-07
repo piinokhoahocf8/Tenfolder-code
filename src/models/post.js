@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const {ObjectId} = mongoose.Schema.Types;
+
 const schema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-      },
+    },
     content: {
         type: String,
         require: true
@@ -13,18 +13,9 @@ const schema = new mongoose.Schema({
         type: Number,
         require: true
     },
-    images: [
-        String
-    ],
-    // likes: [{type:ObjectId,ref:'User'}],
-    // comment: [{
-    //     type: String,
-    //     postedBy:{type:ObjectId,ref:'User'}
-    // }],
-    // postedBy:{
-    //     type:ObjectId,
-    //     ref:'User'
-    // },
+    images: [String],
+
+}, {
     timestamps: true
 });
 

@@ -5,6 +5,4 @@ var router = express.Router();
 
 router.post('/', isAuth, createPost);
 
-//router.put('/comment', )
-
 module.exports = router; 

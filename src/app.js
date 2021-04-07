@@ -7,6 +7,8 @@ const authRoute = require('./routes/auth');
 const userRoute = require('./routes/user');
 const uploadRoute = require('./routes/upload');
 const postRoute = require('./routes/post');
+const commentRoute = require('./routes/comment');
+
 
 
 const app = express()
@@ -36,6 +38,7 @@ app.use('/auth', authRoute)
 app.use('/user', userRoute)
 app.use('/upload', uploadRoute)
 app.use('/post', postRoute)
+app.use('/comment', commentRoute)
 
 //error handler
 app.use(function (err, req, res, next) {
