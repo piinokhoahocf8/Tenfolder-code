@@ -109,13 +109,18 @@ module.exports.forgotPassword = async (req, res, next) => {
             text: `Mật khẩu mới của bạn là ${newPassword}`,
         }
 
+        console.log(msg);
         await sgMail.send(msg)
 
         Response.success({
             res,
-            message: 'Chúng tôi đã gửi mật khẩu mới về email của bạn',
+            data: {
+                message: 'Chúng tôi đã gửi mật khẩu mới về email của bạn',
+            }
+            
         })
     } catch (e) {
+        console.error(e)
         next(e)
     }
 }

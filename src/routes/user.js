@@ -1,5 +1,5 @@
 var express = require('express')
-var { getMe, changeInformation, changePassword, posts } = require('../controllers/user');
+var { getMe, changeInformation, changePassword } = require('../controllers/user');
 var isAuth = require('../middlewares/isAuth')
 var router = express.Router();
 

@@ -9,8 +9,6 @@ const uploadRoute = require('./routes/upload');
 const postRoute = require('./routes/post');
 const commentRoute = require('./routes/comment');
 
-
-
 const app = express()
 const port = 3000
 
@@ -23,11 +21,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   useFindAndModify: false,
   useCreateIndex: true
 });
-
-
-
-
-
 
 app.get('/', function(req, res, next) {
   res.json({

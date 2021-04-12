@@ -1,6 +1,6 @@
 var User = require("../models/user")
 var md5 = require('md5');
-
+var Response = require("../helpers/response")
 
 module.exports.getMe = async (req, res,next) => {
     try {
@@ -29,7 +29,7 @@ module.exports.changeInformation = async (req, res,next) => {
 
         Response.success({
             res,
-            message:{
+            data:{
                 user: user
             }         
         })
@@ -55,14 +55,17 @@ module.exports.changePassword = async (req, res,next) => {
 
         var hashPassword = md5(password);
 
-        await User.findOneAndUpdate({ _id: user._id }, { password: hashPassword })
+        await User.findOneAndUpdate({ _id: req.user._id }, { password: hashPassword })
 
         Response.success({
             res,
-            message: 'Đổi mật khẩu thành công'
+            data: {
+                message: 'Đổi mật khẩu thành công'
+            }
         })
       
    } catch (e) {
+       console.error(e)
       next(e)
     }
 }

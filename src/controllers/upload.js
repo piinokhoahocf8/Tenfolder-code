@@ -2,6 +2,8 @@ var uploader = require('../configs/cloudinary');
 var fs = require('fs');
 
 module.exports.uploadMultiple = async (req, res, next) => {
+  try {
+    console.log('vo day')
     const urls = [];
     const files = req.files;
 
@@ -20,5 +22,8 @@ module.exports.uploadMultiple = async (req, res, next) => {
     res.status(200).json({
       message: 'hnh tải thành công',
       data: urls
-    })    
+    }) 
+  } catch(e) {
+    console.error(e)
+  }   
 };
