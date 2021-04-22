@@ -8,7 +8,7 @@ module.exports.getMe = async (req, res,next) => {
 
         Response.success({
             res,
-            message:{
+            data:{
                 user: user
             }         
         })
@@ -23,7 +23,6 @@ module.exports.changeInformation = async (req, res,next) => {
         var dayOfBirth = req.body.dayOfBirth;
         var address = req.body.address;
         var gender = req.body.gender;
-
 
         var user = await User.findOneAndUpdate({ _id: req.user._id}, { name: name, dayOfBirth: dayOfBirth, address: address, gender: gender }, { new: true })
 
@@ -70,5 +69,20 @@ module.exports.changePassword = async (req, res,next) => {
     }
 }
 
+module.exports.getProfile = async (req, res,next) => {
+    try {
+        var user = await User.findOne({ _id: req.user._id})
+        console.log(user)
+
+        return Response.success({
+            res,
+            data:{
+                user: user
+            }         
+        })
+    } catch (e) {
+        next(e)
+    }
+}
 
 

@@ -8,6 +8,8 @@ const userRoute = require('./routes/user');
 const uploadRoute = require('./routes/upload');
 const postRoute = require('./routes/post');
 const commentRoute = require('./routes/comment');
+const categoryRoute = require('./routes/category');
+
 
 const app = express()
 const port = 3000
@@ -32,6 +34,7 @@ app.use('/user', userRoute)
 app.use('/upload', uploadRoute)
 app.use('/post', postRoute)
 app.use('/comment', commentRoute)
+app.use('/category', categoryRoute)
 
 //error handler
 app.use(function (err, req, res, next) {

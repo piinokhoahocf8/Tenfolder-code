@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
+
 const schema = new mongoose.Schema({
+    Title: {
+        type: String,
+        require: true
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -14,7 +19,10 @@ const schema = new mongoose.Schema({
         require: true
     },
     images: [String],
-
+    category: {
+        type: String,
+        require: true
+    },
 }, {
     timestamps: true
 });

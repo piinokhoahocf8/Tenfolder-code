@@ -14,7 +14,6 @@ module.exports.register = async function (req, res, next) {
 
         var existedUser = await User.findOne({ email: email });
 
-        // neu user da ton tai => tra ve loi
         if (existedUser) {
             return Response.error({
                 res,
@@ -24,7 +23,6 @@ module.exports.register = async function (req, res, next) {
 
         var hashPassword = md5(password);
 
-        // neu khong ton tai => tao tai khoan
         var user  =  await User.create({
             email: email,
             password: hashPassword,
