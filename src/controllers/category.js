@@ -36,7 +36,13 @@ module.exports.getAllCategories = async (req, res, next) => {
 
 exports.getPostsByCategory = async (req, res, next) => {
   try {
-    const posts = await Post.find({ category: req.params.id });
+    const posts = await Post.find({ category: req.params.id })
+      .populate({ path: "category", select: "name" })
+      .populate({
+        path: "user",
+        select: "name",
+      });
+
     Response.success({
       res,
       data: {
