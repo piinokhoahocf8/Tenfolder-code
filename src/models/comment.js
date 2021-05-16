@@ -6,17 +6,15 @@ const schema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-
     post: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
     },
-
+    title: String,
     text: {
       type: String,
       require: true,
     },
-
     rating: {
       type: Number,
       require: true,
