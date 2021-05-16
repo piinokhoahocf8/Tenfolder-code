@@ -1,5 +1,6 @@
 const Post = require("../models/post");
-var Response = require("../helpers/response");
+const Comment = require("../models/comment");
+const Response = require("../helpers/response");
 
 module.exports.createPost = async (req, res, next) => {
   var data = { ...req.body, user: req.user };
@@ -51,4 +52,21 @@ module.exports.getPostById = async (req, res, next) => {
     next(e);
   }
   const result = await Post.find;
+};
+
+exports.getPostComments = async (req, res, next) => {
+  try {
+    const comments = await Comment.find({ post: req.params.id }).populate({
+      path: "user",
+      select: "name avatar",
+    });
+    Response.success({
+      res,
+      data: {
+        comments,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
 };
