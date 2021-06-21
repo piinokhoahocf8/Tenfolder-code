@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon src/app/js",
-    "dev": "nodemon src/app.js"
+    "dev": "nodemon --ignore src/upload src/app.js"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.2",

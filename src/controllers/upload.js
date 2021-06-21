@@ -6,7 +6,7 @@ module.exports.uploadMultiple = async (req, res, next) => {
     console.log('vo day')
     const urls = [];
     const files = req.files;
-
+console.log(files)
     for (const file of files) {
       var path = file.path;
 
